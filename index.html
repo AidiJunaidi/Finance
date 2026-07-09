@@ -104,11 +104,11 @@ body {
 /* ── NET WORTH STRIP ── */
 .nw-row { display: flex; gap: 10px; margin-bottom: 10px; }
 .nw-pill {
-  flex: 1; background: rgba(255,255,255,0.15); border-radius: 10px;
+  flex: 1; background: var(--card); border: 1px solid var(--border); border-radius: 10px;
   padding: 10px 12px; text-align: center;
 }
-.nw-pill-label { font-size: 10px; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
-.nw-pill-val { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: #fff; }
+.nw-pill-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px; }
+.nw-pill-val { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--text); }
 
 /* ── ACCOUNT CARDS ── */
 .acc-card {
@@ -330,7 +330,7 @@ body {
 
   <div class="section" style="padding-top:16px">
     <!-- Income / Expenses summary pills -->
-    <div class="nw-row" style="margin-bottom:14px" id="home-summary-row">
+    <div class="nw-row" style="margin-bottom:14px;margin-top:4px" id="home-summary-row">
       <!-- rendered by JS -->
     </div>
 
@@ -639,9 +639,9 @@ function renderHome() {
   // Summary pills
   const inc = monthlyIncome(), exp = monthlySpend();
   document.getElementById('home-summary-row').innerHTML = `
-    <div class="nw-pill"><div class="nw-pill-label">Income</div><div class="nw-pill-val">${fmtPlain(inc)}</div></div>
-    <div class="nw-pill"><div class="nw-pill-label">Spent</div><div class="nw-pill-val">${fmtPlain(exp)}</div></div>
-    <div class="nw-pill"><div class="nw-pill-label">Saved</div><div class="nw-pill-val">${fmtPlain(inc - exp)}</div></div>`;
+    <div class="nw-pill"><div class="nw-pill-label">Income</div><div class="nw-pill-val" style="color:var(--green)">${fmtPlain(inc)}</div></div>
+    <div class="nw-pill"><div class="nw-pill-label">Spent</div><div class="nw-pill-val" style="color:var(--red)">${fmtPlain(exp)}</div></div>
+    <div class="nw-pill"><div class="nw-pill-label">Saved</div><div class="nw-pill-val" style="color:var(--teal)">${fmtPlain(Math.max(0, inc - exp))}</div></div>`;
 
   // Accounts
   const accEl = document.getElementById('home-accounts');
@@ -1056,7 +1056,7 @@ function clearAllData() {
 // ══════════════════════════════════════════════════
 function init() {
   const h = new Date().getHours();
-  const gr = h < 12 ? 'Selamat pagi' : h < 17 ? 'Selamat petang' : 'Selamat malam';
+  const gr = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
   document.getElementById('topbar-greeting').textContent = gr + ', Aidi';
   document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long' });
   renderHome();
